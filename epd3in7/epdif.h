@@ -30,11 +30,11 @@
 
 #include <Arduino.h>
 
-// Pin definition
-#define RST_PIN         8
-#define DC_PIN          9
-#define CS_PIN          10
-#define BUSY_PIN        7
+// Pin definition for Pi Pico
+#define RST_PIN         12
+#define DC_PIN          8
+#define CS_PIN          9
+#define BUSY_PIN        13
 
 class EpdIf {
 public:

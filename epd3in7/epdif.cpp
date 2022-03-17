@@ -28,6 +28,21 @@
 #include "epdif.h"
 #include <SPI.h>
 
+// Define the SPI1 pins for the Pi Pico
+#define SPI_MISO1 4
+#define SPI_MOSI1 11
+#define SPI_SCK1 10
+
+// Create our own Mbed SPI1 object to access the SPI1 block
+// Note, the 'NC' is because the MISO pin is not connected to the epaper
+// display, and I could not find a 'benign' pin to assign it to, as both
+// possible 'SPI1 RX' pins (GP8 and GP12) are already used by the e-paper
+// board for other things:
+//  - GP8 is DC
+//  - GP12 is RST
+arduino::MbedSPI SPI1(NC, SPI_MOSI1, SPI_SCK1);
+
+
 EpdIf::EpdIf() {
 };
 
@@ -48,7 +63,7 @@ void EpdIf::DelayMs(unsigned int delaytime) {
 
 void EpdIf::SpiTransfer(unsigned char data) {
     digitalWrite(CS_PIN, LOW);
-    SPI.transfer(data);
+    SPI1.transfer(data);
     digitalWrite(CS_PIN, HIGH);
 }
 
@@ -57,8 +72,8 @@ int EpdIf::IfInit(void) {
     pinMode(RST_PIN, OUTPUT);
     pinMode(DC_PIN, OUTPUT);
     pinMode(BUSY_PIN, INPUT); 
-    SPI.begin();
-    SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
+    SPI1.begin();
+    SPI1.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
     
     return 0;
 }
