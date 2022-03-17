@@ -26,7 +26,7 @@
  */
 
 #include "epdif.h"
-#include <spi.h>
+#include <SPI.h>
 
 EpdIf::EpdIf() {
 };
@@ -62,4 +62,3 @@ int EpdIf::IfInit(void) {
     
     return 0;
 }
-
